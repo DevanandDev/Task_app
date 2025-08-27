@@ -8,25 +8,39 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("Products")),
       body: Consumer<ProductProvider>(
-        builder: (context, value, child) {
-        return  value.isLoading ? CircularProgressIndicator() : 
-          ListView.builder(
-            itemCount: value.productList.length,
-            
-            itemBuilder: (context, index) {
-            final product = value.productList[index];
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (provider.productList.isEmpty) {
+            return const Center(child: Text("No products found"));
+          }
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemCount: provider.productList.length,
 
-            return ListTile(
-              leading: Column(
-                children: [
-                  Text(product.id.toString()),
-                  Text(product.title),
-                ],
-              ),
-              trailing: Text(product.category),
-            );
-          },);
+            itemBuilder: (context, index) {
+              final product = provider.productList[index];
+              return Card(
+                child: Column(
+                  children: [
+                    Text(product.id.toString()),
+                    Expanded(child: Image.network(product.image,fit: BoxFit.cover,)),
+                    Row(
+                      children: [
+                        Text('Name :',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold)),
+                        Expanded(child: Text(product.title,overflow: TextOverflow.ellipsis)),
+                      ],
+                    )  
+                  ],
+                ),
+              );
+            },
+          );
         },
       ),
     );

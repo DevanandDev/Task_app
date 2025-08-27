@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:task/data/models/model.dart';
 
@@ -14,6 +16,7 @@ class ProductService {
   Future<List<ProductModel>> getProductService() async {
     try {
       final response = await dio.get(url);
+      log("API data: ${response.data}");
 
       if (response.statusCode == 200) {
         final List listProduct = response.data;

@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task/feature/auth/screens/login_screen.dart';
 import 'package:task/feature/products/provider/provider.dart';
-import 'package:task/feature/products/screens/home.dart';
 import 'package:task/core/config/firebase_options.dart';
 
 void main() async {
@@ -23,6 +23,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHome(), debugShowCheckedModeBanner: false);
+    return const MaterialApp(home: MyLoginPage(), debugShowCheckedModeBanner: false);
   }
 }
